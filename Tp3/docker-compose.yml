@@ -1,0 +1,37 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - taskflow
+
+  backend:
+    build: ./backend
+    ports:
+      - "${BACKEND_PORT:-3001}:3001"
+    environment:
+      APP_ENV: ${APP_ENV:-local}
+      REDIS_HOST: ${REDIS_HOST:-cache}
+      REDIS_PORT: ${REDIS_PORT:-6379}
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+    depends_on:
+      - cache
+    networks:
+      - taskflow
+
+  cache:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+    networks:
+      - taskflow
+    # Pas de ports: -> Redis non accessible depuis l'extérieur
+
+networks:
+  taskflow:
+
+volumes:
+  redis_data:

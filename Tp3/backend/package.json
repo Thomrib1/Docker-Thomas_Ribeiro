@@ -1,0 +1,12 @@
+{
+  "name": "taskflow-backend",
+  "version": "1.0.0",
+  "description": "API TaskFlow - TP3",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "redis": "^4.6.0"
+  }
+}
